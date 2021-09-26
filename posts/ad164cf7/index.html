@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="打怪升级，游戏人生"><title>js基础核心梳理之Video | SioCheung</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = 'https://hm.baidu.com/hm.js?' + '05229ec683dcdbf3f2336800f1e4a337';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+  </script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">js基础核心梳理之Video</h1><a id="logo" href="/."><span class="defualt">Sio</span><span class="vi-color">Cheung</span></a><p class="description">君子求诸己</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">js基础核心梳理之Video</h1><div class="post-meta">Nov 20, 2016<span> | </span><span class="category"><a href="/categories/js/">js</a></span></div><div class="post-content"><p>最近在做H5的播放器video，随带着查查资料研究下flash工具和H5技术标准现在的情况。相比较于flash,H5在越来越明朗的移动市场上更具有光明的前景，youtube、apple的无flash产品线似乎已经引领了某种趋势，即使在pc上随着现代浏览器厂商的对H5的支持越来越全面，H5也能占据一席之地。原生的api video audio canvas等普及，H5这个新技术标准会把web动画视频游戏领域带入另一个高潮。<br><a id="more"></a><br><blockquote><p>Adobe太封闭了，产品100%私有。<br>Flash影片大多遵循H.264格式，这种格式苹果是支持的；至于没有Flash游戏，不足以错过APP Store里精彩的游戏人生。<br>一旦支持Flash，苹果移动设备的稳定性、安全性会大大降低。<br>Flash非常耗电。<br>想让Flash适应触控设计，你得重写代码，还不如用更先进的HTML5。<br>最后也是最重要的，完全依赖第三方软件开发，会延误我们所有人使用其他产品的新功能。</p>
+<footer><strong>乔布斯 《Flash之我见》</strong></footer></blockquote></p>
+<p>上面整理了乔帮主怼flash的文章的截取，这里就知道为什么flash会衰落，HTML5会兴起的原因了，后来谷歌帝国、脸书帝国、油管帝国都在慢慢的嫌弃flash的道路上越走越远，移动端的flash的停更说明连Adobe自己也看不下去这个产品了，这个现象就像多米诺骨牌，让我们这些当年的吃瓜群众纷纷侧目，怀疑某个兴盛的时代是不是说变就变了。我感觉到国际巨头互联网企业想推一个产品而且是正确的时代产品，这个产品就是这个领域的未来。<br>那到底啥是flash,Flash是一种交互式矢量图与Web动画标准，因为体积小、易于传输、不失真等优点，契合2000年前后小带宽的互联网环境，迅速在全球崛起，简直就是时代骄子，横跨影视、游戏、广告领域，说是霸主简直都是在污蔑他的影响力，市场占有率几乎100%，然而一个朝代故步自封，不思进取也会被新的王朝替代，所以flash最终被H5还是其他的产品挤下神坛都是迟早的事，就看谁能在flash的棺材班上钉上最后一颗钉子。<br>那么废话结束了，唉，还是要学点东西才能赶上他们眼里的旧时代，这日子没法过了。<br>先列个video的基础api梳理，毕竟是最近做的事，以后专门再开个canvas专题、websocket专题把踩坑记录心得拿上来记一记。</p>
+<h4 id="Video-对象属性"><a href="#Video-对象属性" class="headerlink" title="Video 对象属性"></a>Video 对象属性</h4><p><code>src</code> 设置或返回视频的 src 属性的值。</p>
+<p><code>height</code> 设置或返回视频的 height 属性的值。</p>
+<p><code>width</code> 设置或返回视频的 width 属性的值。</p>
+<p><code>controls</code> 设置或返回视频是否应该显示控件（比如播放/暂停等）。</p>
+<p><code>loop</code> 设置或返回视频是否应在结束时再次播放。</p>
+<p><code>autoplay</code> 设置或返回是否在就绪（加载完成）后随即播放视频。</p>
+<p><code>poster</code> 设置或返回视频的 poster 属性的值,不播放视频时显示的图片。</p>
+<p><code>muted</code> 设置或返回是否关闭声音。</p>
+<p><code>defaultMuted</code> 设置或返回视频默认是否静音。</p>
+<p><code>ended</code> 返回视频的播放是否已结束。</p>
+<p><code>volume</code> 设置或返回视频的音量。</p>
+<p><code>defaultPlaybackRate</code> 设置或返回视频的默认播放速度。</p>
+<p><code>playbackRate</code> 设置或返回视频播放的速度。</p>
+<p><code>preload</code> 设置或返回视频的 preload 属性的值，提前加载视频 none auto metadata。</p>
+<p><code>duration</code> 返回视频的长度（以秒计）。</p>
+<p><code>currentTime</code> 设置或返回视频中的当前播放位置（以秒计）。</p>
+<p><code>currentSrc</code> 返回当前视频的 URL。</p>
+<p><code>readyState</code> 返回视频当前的就绪状态。</p>
+<p><code>networkState</code> 返回视频的当前网络状态。</p>
+<p><code>paused</code> 设置或返回视频是否暂停。</p>
+<p><code>error</code> 返回表示视频错误状态的 MediaError 对象 只读。</p>
+<p><code>seeking</code> 返回用户当前是否正在视频中进行查找。</p>
+<p><code>played</code> 返回表示视频已播放部分的 TimeRanges 对象。</p>
+<p><code>audioTracks</code> 返回表示可用音频轨道的 AudioTrackList 对象。</p>
+<p><code>buffered</code> 返回表示视频已缓冲部分的 TimeRanges 对象。</p>
+<p><code>controller</code> 返回表示视频当前媒体控制器的 MediaController 对象。</p>
+<p><code>crossOrigin</code> 设置或返回视频的 CORS 设置。</p>
+<p><code>mediaGroup</code> 设置或返回视频所属媒介组合的名称。</p>
+<p><code>seekable</code> 返回表示视频可寻址部分的 TimeRanges 对象。</p>
+<p><code>startDate</code> 返回表示当前时间偏移的 Date 对象。</p>
+<p><code>textTracks</code> 返回表示可用文本轨道的 TextTrackList 对象。</p>
+<p><code>videoTracks</code> 返回表示可用视频轨道的 VideoTrackList 对象。</p>
+<h4 id="Video-对象方法"><a href="#Video-对象方法" class="headerlink" title="Video 对象方法"></a>Video 对象方法</h4><p>方法 描述</p>
+<p><code>play()</code> 开始播放视频。</p>
+<p><code>pause()</code> 暂停当前播放的视频。</p>
+<p><code>addTextTrack()</code> 向视频添加新的文本轨道。</p>
+<p><code>canPlayType()</code> 检查浏览器是否能够播放指定的视频类型。返回空串或 “maybe” “probably”</p>
+<p><code>load()</code> 重新加载视频元素。</p>
+<h4 id="Video-事件"><a href="#Video-事件" class="headerlink" title="Video 事件"></a>Video 事件</h4><p><code>play</code><br>即将开始播放，当执行了play方法时触发，或数据下载后元素被设为autoplay属性</p>
+<p><code>abort</code><br>浏览器在下载完全部媒体数据之前中止获取媒体数据，但是并不是由错误引起的</p>
+<p><code>pause</code><br>播放暂停，当执行了pause方式时触发</p>
+<p><code>waiting</code><br>播放过程由于得不到下一帧而暂停播放（例如下一帧尚未加载完毕），但很快就能够得到下一帧</p>
+<p><code>progress</code><br>浏览器正在获取媒体数据</p>
+<p><code>loadeddata</code><br>事件在当前帧的数据加载完成且还没有足够的数据播放视频/音频（audio/video）的下一帧时触发。</p>
+<p><code>error</code><br>获取媒体数据过程中出错</p>
+<p><code>loadedmetadata</code><br>浏览器获取完毕媒体的时间长和字节数</p>
+<p><code>timeupdate</code><br>由于播放位置被改变，可能是播放过程中的自然改变，也可能是被人为的改变，或由于播放不能连续而发生的跳变</p>
+<p><code>ended</code><br>播放结束后停止播放</p>
+<p><code>canplay</code><br>浏览器能够播放媒体，但估计以当前的播放速率不能直接播放完毕，播放期间需要缓冲</p>
+<p><code>canplaythrough</code><br>浏览器能够播放媒体，而且以当前播放速率能够将媒体播放完毕，不再需要进行缓冲</p>
+<p><code>volumechange</code><br>volume属性（音量）被改变或muted属性（静音状态）被改变</p>
+<blockquote>
+<p>欢迎交流转载请注明出处</p>
+</blockquote>
+</div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>theo</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/posts/ad164cf7/">https://joacycode.github.io/posts/ad164cf7/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>theoCheung@China</li></ul></div><br><div class="tags"><a href="/tags/js/">js</a><a href="/tags/video/">video</a><a href="/tags/全屏/">全屏</a></div><div class="post-nav"><a class="pre" href="/posts/82735d62/">浅析linux chmod命令</a><a class="next" href="/posts/e978f84e/">Html Css编码规范心得</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget widget-info"><div class="widget-info"><a style="text-align:center"><img class="widget-info-photo" src="https://aszero.oss-cn-shanghai.aliyuncs.com/imgs/fangao_495x606.jpg" style="width:80px;height:80px;border-radius: 100%;"></a><p class="myname">SioCheung</p><p class="slogan">Zero to Hero</p></div></div><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/posts/a0e43f83/">DSL介绍和使用</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/15ddfa03/">你不知道的AST</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/97b701ae/">你不知道的babel</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/e87e7952/">那一年前端招人的部分笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/6b76c6f6/">shell编程来实现一些自动化-基础篇</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/e7485c24/">常见模块化规范研究记录</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/7b16fe01/">你不知道的rollup</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/ad3abf2b/">浏览器标签之间的通信</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/30ba4d06/">你不知道的yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/5ece973c/">我对于同步异步和阻塞非阻塞理解</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/categories/">categories</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotjs/">dotjs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/h5/">h5</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/joacycode" title="github.com/joacycode" target="_blank">github.com/joacycode</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">SioCheung.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
