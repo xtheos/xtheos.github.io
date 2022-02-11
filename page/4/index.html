@@ -1,18 +1,790 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="打怪升级，游戏人生"><title>SioCheung | 君子求诸己</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = 'https://hm.baidu.com/hm.js?' + '05229ec683dcdbf3f2336800f1e4a337';
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-  })();
-  </script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SioCheung</h1><a id="logo" href="/."><span class="defualt">Sio</span><span class="vi-color">Cheung</span></a><p class="description">君子求诸己</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/posts/262a55b/">H5项目常见问题及注意事项</a></h1><div class="post-meta">2017-02-12</div><div class="post-content"><h4 id="Meta基础知识："><a href="#Meta基础知识：" class="headerlink" title="Meta基础知识："></a>Meta基础知识：</h4><p>H5页面窗口自动调整到设备宽度，并禁止用户缩放页面</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//一、HTML页面结构</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"</span> /&gt;</span></span><br><span class="line">// width    设置viewport宽度，为一个正整数，或字符串‘device-width’</span><br><span class="line">// height   设置viewport高度，一般设置了宽度，会自动解析出高度，可以不用设置</span><br><span class="line">// initial-scale    默认缩放比例，为一个数字，可以带小数</span><br><span class="line">// minimum-scale    允许用户最小缩放比例，为一个数字，可以带小数</span><br><span class="line">// maximum-scale    允许用户最大缩放比例，为一个数字，可以带小数</span><br><span class="line">// user-scalable    是否允许手动缩放</span><br><span class="line"></span><br><span class="line">//二、JS动态判断</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> phoneWidth =  <span class="built_in">parseInt</span>(<span class="built_in">window</span>.screen.width);</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> phoneScale = phoneWidth/<span class="number">640</span>;</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> ua = navigator.userAgent;</span></span><br><span class="line"><span class="javascript"><span class="keyword">if</span> (<span class="regexp">/Android (\d+\.\d+)/</span>.test(ua))&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> version = <span class="built_in">parseFloat</span>(<span class="built_in">RegExp</span>.$<span class="number">1</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">if</span>(version&gt;<span class="number">2.3</span>)&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.write(<span class="string">'&lt;meta name="viewport" content="width=640, minimum-scale = '</span>+phoneScale+<span class="string">', maximum-scale = '</span>+phoneScale+<span class="string">', target-densitydpi=device-dpi"&gt;'</span>);</span></span><br><span class="line"><span class="actionscript">    &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="handlebars"><span class="xml">        document.write('<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=640, target-densitydpi=device-dpi"</span>&gt;</span>');</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="actionscript">&#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="handlebars"><span class="xml">    document.write('<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=640, user-scalable=no, target-densitydpi=device-dpi"</span>&gt;</span>');</span></span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/posts/262a55b/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/82735d62/">浅析linux chmod命令</a></h1><div class="post-meta">2016-12-13</div><div class="post-content"><p>最近遇到一同事问我怎么快速的给文件夹加密，我寻思着这货又收集什么见不得人的机密了，给文件夹或者文件加密的方式有很多，要钱的不要钱的就说你想要什么样的吧。得，整了半天给我来句只要别人没权限打开就成，那这不好办么，直接设个权限不就完事了么，暂时糊弄糊弄一些生瓜蛋子做到打不开就死心还是可以的。最近正好遇到一些涉及到权限问题的事，就在这捋一捋，认识认识新词。<br>linux有个命令叫<code>chmod</code>，就是更改权限的作用。<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod [-cfvR] [--help] [--version]  mode  file...</span><br></pre></td></tr></table></figure></p></div><p class="readmore"><a href="/posts/82735d62/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/ad164cf7/">js基础核心梳理之Video</a></h1><div class="post-meta">2016-11-20</div><div class="post-content"><p>最近在做H5的播放器video，随带着查查资料研究下flash工具和H5技术标准现在的情况。相比较于flash,H5在越来越明朗的移动市场上更具有光明的前景，youtube、apple的无flash产品线似乎已经引领了某种趋势，即使在pc上随着现代浏览器厂商的对H5的支持越来越全面，H5也能占据一席之地。原生的api video audio canvas等普及，H5这个新技术标准会把web动画视频游戏领域带入另一个高潮。<br></p></div><p class="readmore"><a href="/posts/ad164cf7/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/e978f84e/">Html Css编码规范心得</a></h1><div class="post-meta">2016-11-08</div><div class="post-content"><p>Css编码规范 Html编码规范 Css类名约定…<br></p></div><p class="readmore"><a href="/posts/e978f84e/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/64c6bd1d/">js基础核心梳理之常用事件</a></h1><div class="post-meta">2016-10-22</div><div class="post-content"><p>这里整理了一般事件、页面相关事件、表单相关事件、滚动字幕事件、滚动字幕事件、编辑事件、数据绑定的相关api,仅供参考查阅。<br></p></div><p class="readmore"><a href="/posts/64c6bd1d/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/66c9f5d6/">shell快捷启动sublime vsCode方法</a></h1><div class="post-meta">2016-09-29</div><div class="post-content"><p>最近在使用命令行去打开需要编辑的文本的时候，一直想使用自己习惯的编辑器去打开（sublimeText、vsCode都是友好型的优秀的编辑器），默认的命令行vim编辑器用的不是很习惯，于是想到使用alias方法可以做这些事，只需要简单几步，就可以实现,以下针对sublime为例。<br><strong>环境平台：mac</strong><br></p></div><p class="readmore"><a href="/posts/66c9f5d6/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/1c6a5067/">js基础核心梳理之DOM操作</a></h1><div class="post-meta">2016-09-28</div><div class="post-content"><h4 id="一、DOM创建"><a href="#一、DOM创建" class="headerlink" title="一、DOM创建"></a>一、DOM创建</h4><p>DOM节点（Node）通常对应于一个标签，一个文本，或者一个HTML属性。DOM节点有一个nodeType属性用来表示当前元素的类型，它是一个整数：</p>
-<p>Element，元素Attribute，属性Text，文本DOM节点创建最常用的便是document.createElement和document.createTextNode方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> node1 = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line"><span class="keyword">var</span> node2 = <span class="built_in">document</span>.createTextNode(<span class="string">'hello world!'</span>);</span><br></pre></td></tr></table></figure></p></div><p class="readmore"><a href="/posts/1c6a5067/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/46199434/">Markdown常用语法梳理</a></h1><div class="post-meta">2016-06-20</div><div class="post-content"><p>Markdown的宗旨是易读容写，它和html标记语言有点类似，前者是一种书写格式，后者是一种发布格式。<br>这里只记录常用博客语法，不断更新中。</p>
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>xtheos的网络日志</title>
+  <meta name="description" content="常抱有理想，常不抱有期望">
+<meta property="og:type" content="website">
+<meta property="og:title" content="xtheo">
+<meta property="og:url" content="https://xtheos.github.io/page/4/index.html">
+<meta property="og:site_name" content="xtheo">
+<meta property="og:description" content="常抱有理想，常不抱有期望">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xtheo">
+<meta name="twitter:description" content="常抱有理想，常不抱有期望">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://xtheos.github.io/page/4/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="xtheo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xtheos" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Xtheos</h2>
+        <h3 id="description" class="hidden-xs hidden-sm hidden-md">追求优秀，接受平凡</h3>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Thinker</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shanghai, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xtheos" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/categories/">categories</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotjs/">dotjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/h5/">h5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canvas/">Canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FileReader/">FileReader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XMLHttpRequest/">XMLHttpRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XMLHttpRequest2/">XMLHttpRequest2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api/">api</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/charles/">charles</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chmod/">chmod</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debounce/">debounce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dom/">dom</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dotjs/">dotjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/event/">event</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fs/">fs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/">h5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/history/">history</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-ClientRequest/">http.ClientRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-IncomingMessage/">http.IncomingMessage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-Server/">http.Server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-ServerResponse/">http.ServerResponse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/path/">path</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime/">sublime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tag/">tag</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this/">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/throttle/">throttle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-plugins/">vue-plugins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-rooter/">vue-rooter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex/">vuex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/全屏/">全屏</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步异步/">同步异步</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/定制化/">定制化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/柯里化/">柯里化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/规范/">规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阻塞非阻塞/">阻塞非阻塞</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Canvas/" style="font-size: 13px;">Canvas</a> <a href="/tags/FileReader/" style="font-size: 13px;">FileReader</a> <a href="/tags/XMLHttpRequest/" style="font-size: 13px;">XMLHttpRequest</a> <a href="/tags/XMLHttpRequest2/" style="font-size: 13px;">XMLHttpRequest2</a> <a href="/tags/api/" style="font-size: 13px;">api</a> <a href="/tags/charles/" style="font-size: 13px;">charles</a> <a href="/tags/chmod/" style="font-size: 13px;">chmod</a> <a href="/tags/css/" style="font-size: 13.33px;">css</a> <a href="/tags/debounce/" style="font-size: 13px;">debounce</a> <a href="/tags/dom/" style="font-size: 13px;">dom</a> <a href="/tags/dotjs/" style="font-size: 13px;">dotjs</a> <a href="/tags/event/" style="font-size: 13px;">event</a> <a href="/tags/fs/" style="font-size: 13px;">fs</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/h5/" style="font-size: 13px;">h5</a> <a href="/tags/history/" style="font-size: 13px;">history</a> <a href="/tags/html/" style="font-size: 13px;">html</a> <a href="/tags/http-ClientRequest/" style="font-size: 13px;">http.ClientRequest</a> <a href="/tags/http-IncomingMessage/" style="font-size: 13px;">http.IncomingMessage</a> <a href="/tags/http-Server/" style="font-size: 13px;">http.Server</a> <a href="/tags/http-ServerResponse/" style="font-size: 13px;">http.ServerResponse</a> <a href="/tags/js/" style="font-size: 14px;">js</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/path/" style="font-size: 13px;">path</a> <a href="/tags/react/" style="font-size: 13px;">react</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a> <a href="/tags/sublime/" style="font-size: 13px;">sublime</a> <a href="/tags/tag/" style="font-size: 13.67px;">tag</a> <a href="/tags/this/" style="font-size: 13px;">this</a> <a href="/tags/throttle/" style="font-size: 13px;">throttle</a> <a href="/tags/typescript/" style="font-size: 13px;">typescript</a> <a href="/tags/video/" style="font-size: 13.33px;">video</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-plugins/" style="font-size: 13px;">vue-plugins</a> <a href="/tags/vue-rooter/" style="font-size: 13px;">vue-rooter</a> <a href="/tags/vuex/" style="font-size: 13px;">vuex</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/windows/" style="font-size: 13px;">windows</a> <a href="/tags/全屏/" style="font-size: 13.33px;">全屏</a> <a href="/tags/同步异步/" style="font-size: 13px;">同步异步</a> <a href="/tags/定制化/" style="font-size: 13px;">定制化</a> <a href="/tags/柯里化/" style="font-size: 13px;">柯里化</a> <a href="/tags/规范/" style="font-size: 13px;">规范</a> <a href="/tags/阻塞非阻塞/" style="font-size: 13px;">阻塞非阻塞</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/categories/">categories</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/a0e43f83/" class="title">DSL介绍和使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-18T15:37:16.000Z" itemprop="datePublished">2021-01-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/categories/">categories</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/15ddfa03/" class="title">你不知道的AST</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-02T20:30:01.000Z" itemprop="datePublished">2020-06-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/categories/">categories</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/97b701ae/" class="title">你不知道的babel</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-01-27T21:34:33.000Z" itemprop="datePublished">2020-01-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/e87e7952/" class="title">那一年前端招人的部分笔试题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-05T17:12:52.000Z" itemprop="datePublished">2019-11-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/shell/">shell</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/6b76c6f6/" class="title">shell编程来实现一些自动化-基础篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-10-05T17:46:55.000Z" itemprop="datePublished">2019-10-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  <main class="main" role="main">
+  
+  <div class="content article-list">
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/262a55b/">H5项目常见问题及注意事项</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <h4 id="Meta基础知识："><a href="#Meta基础知识：" class="headerlink" title="Meta基础知识："></a>Meta基础知识：</h4><p>H5页面窗口自动调整到设备宽度，并禁止用户缩放页面</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//一、HTML页面结构</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"</span> /&gt;</span></span><br><span class="line">// width    设置viewport宽度，为一个正整数，或字符串‘device-width’</span><br><span class="line">// height   设置viewport高度，一般设置了宽度，会自动解析出高度，可以不用设置</span><br><span class="line">// initial-scale    默认缩放比例，为一个数字，可以带小数</span><br><span class="line">// minimum-scale    允许用户最小缩放比例，为一个数字，可以带小数</span><br><span class="line">// maximum-scale    允许用户最大缩放比例，为一个数字，可以带小数</span><br><span class="line">// user-scalable    是否允许手动缩放</span><br><span class="line"></span><br><span class="line">//二、JS动态判断</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> phoneWidth =  <span class="built_in">parseInt</span>(<span class="built_in">window</span>.screen.width);</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> phoneScale = phoneWidth/<span class="number">640</span>;</span></span><br><span class="line"><span class="actionscript"><span class="keyword">var</span> ua = navigator.userAgent;</span></span><br><span class="line"><span class="javascript"><span class="keyword">if</span> (<span class="regexp">/Android (\d+\.\d+)/</span>.test(ua))&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> version = <span class="built_in">parseFloat</span>(<span class="built_in">RegExp</span>.$<span class="number">1</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">if</span>(version&gt;<span class="number">2.3</span>)&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.write(<span class="string">'&lt;meta name="viewport" content="width=640, minimum-scale = '</span>+phoneScale+<span class="string">', maximum-scale = '</span>+phoneScale+<span class="string">', target-densitydpi=device-dpi"&gt;'</span>);</span></span><br><span class="line"><span class="actionscript">    &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="handlebars"><span class="xml">        document.write('<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=640, target-densitydpi=device-dpi"</span>&gt;</span>');</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="actionscript">&#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="handlebars"><span class="xml">    document.write('<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=640, user-scalable=no, target-densitydpi=device-dpi"</span>&gt;</span>');</span></span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/262a55b/" class="article-date">
+	  <time datetime="2017-02-12T00:00:00.000Z" itemprop="datePublished">2月 12</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/h5/">h5</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/api/">api</a>, <a class="article-tag-link" href="/tags/h5/">h5</a>, <a class="article-tag-link" href="/tags/js/">js</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/262a55b/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 5.3k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 23(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/82735d62/">浅析linux chmod命令</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>最近遇到一同事问我怎么快速的给文件夹加密，我寻思着这货又收集什么见不得人的机密了，给文件夹或者文件加密的方式有很多，要钱的不要钱的就说你想要什么样的吧。得，整了半天给我来句只要别人没权限打开就成，那这不好办么，直接设个权限不就完事了么，暂时糊弄糊弄一些生瓜蛋子做到打不开就死心还是可以的。最近正好遇到一些涉及到权限问题的事，就在这捋一捋，认识认识新词。<br>linux有个命令叫<code>chmod</code>，就是更改权限的作用。<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod [-cfvR] [--help] [--version]  mode  file...</span><br></pre></td></tr></table></figure></p>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/82735d62/" class="article-date">
+	  <time datetime="2016-12-13T00:00:00.000Z" itemprop="datePublished">12月 13</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/chmod/">chmod</a>, <a class="article-tag-link" href="/tags/js/">js</a>, <a class="article-tag-link" href="/tags/linux/">linux</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/82735d62/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/ad164cf7/">js基础核心梳理之Video</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>最近在做H5的播放器video，随带着查查资料研究下flash工具和H5技术标准现在的情况。相比较于flash,H5在越来越明朗的移动市场上更具有光明的前景，youtube、apple的无flash产品线似乎已经引领了某种趋势，即使在pc上随着现代浏览器厂商的对H5的支持越来越全面，H5也能占据一席之地。原生的api video audio canvas等普及，H5这个新技术标准会把web动画视频游戏领域带入另一个高潮。<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/ad164cf7/" class="article-date">
+	  <time datetime="2016-11-20T00:00:00.000Z" itemprop="datePublished">11月 20</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/js/">js</a>, <a class="article-tag-link" href="/tags/video/">video</a>, <a class="article-tag-link" href="/tags/全屏/">全屏</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/ad164cf7/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/e978f84e/">Html Css编码规范心得</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>Css编码规范 Html编码规范 Css类名约定…<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/e978f84e/" class="article-date">
+	  <time datetime="2016-11-08T00:00:00.000Z" itemprop="datePublished">11月 8</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/other/">other</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/css/">css</a>, <a class="article-tag-link" href="/tags/html/">html</a>, <a class="article-tag-link" href="/tags/规范/">规范</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/e978f84e/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 951(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/64c6bd1d/">js基础核心梳理之常用事件</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>这里整理了一般事件、页面相关事件、表单相关事件、滚动字幕事件、滚动字幕事件、编辑事件、数据绑定的相关api,仅供参考查阅。<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/64c6bd1d/" class="article-date">
+	  <time datetime="2016-10-22T00:00:00.000Z" itemprop="datePublished">10月 22</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/event/">event</a>, <a class="article-tag-link" href="/tags/js/">js</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/64c6bd1d/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/66c9f5d6/">shell快捷启动sublime vsCode方法</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>最近在使用命令行去打开需要编辑的文本的时候，一直想使用自己习惯的编辑器去打开（sublimeText、vsCode都是友好型的优秀的编辑器），默认的命令行vim编辑器用的不是很习惯，于是想到使用alias方法可以做这些事，只需要简单几步，就可以实现,以下针对sublime为例。<br><strong>环境平台：mac</strong><br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/66c9f5d6/" class="article-date">
+	  <time datetime="2016-09-29T00:00:00.000Z" itemprop="datePublished">9月 29</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/tool/">tool</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/sublime/">sublime</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/66c9f5d6/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 359(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/1c6a5067/">js基础核心梳理之DOM操作</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <h4 id="一、DOM创建"><a href="#一、DOM创建" class="headerlink" title="一、DOM创建"></a>一、DOM创建</h4><p>DOM节点（Node）通常对应于一个标签，一个文本，或者一个HTML属性。DOM节点有一个nodeType属性用来表示当前元素的类型，它是一个整数：</p>
+<p>Element，元素Attribute，属性Text，文本DOM节点创建最常用的便是document.createElement和document.createTextNode方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> node1 = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line"><span class="keyword">var</span> node2 = <span class="built_in">document</span>.createTextNode(<span class="string">'hello world!'</span>);</span><br></pre></td></tr></table></figure></p>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/1c6a5067/" class="article-date">
+	  <time datetime="2016-09-28T00:00:00.000Z" itemprop="datePublished">9月 28</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/dom/">dom</a>, <a class="article-tag-link" href="/tags/js/">js</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/1c6a5067/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 920(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 4(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/46199434/">Markdown常用语法梳理</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>Markdown的宗旨是易读容写，它和html标记语言有点类似，前者是一种书写格式，后者是一种发布格式。<br>这里只记录常用博客语法，不断更新中。</p>
 <h4 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h4><p>在插入处先按入两个以上的空格然后回车</p>
-<h4 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h4><p><code>#</code> H1<br><code>##</code> H2<br><code>#####</code> H6<br></p></div><p class="readmore"><a href="/posts/46199434/">阅读全文</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget widget-info"><div class="widget-info"><a style="text-align:center"><img class="widget-info-photo" src="https://aszero.oss-cn-shanghai.aliyuncs.com/imgs/fangao_495x606.jpg" style="width:80px;height:80px;border-radius: 100%;"></a><p class="myname">SioCheung</p><p class="slogan">Zero to Hero</p></div></div><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/posts/a0e43f83/">DSL介绍和使用</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/15ddfa03/">你不知道的AST</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/97b701ae/">你不知道的babel</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/e87e7952/">那一年前端招人的部分笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/6b76c6f6/">shell编程来实现一些自动化-基础篇</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/e7485c24/">常见模块化规范研究记录</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/7b16fe01/">你不知道的rollup</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/ad3abf2b/">浏览器标签之间的通信</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/30ba4d06/">你不知道的yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/5ece973c/">我对于同步异步和阻塞非阻塞理解</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/categories/">categories</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotjs/">dotjs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/h5/">h5</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/joacycode" title="github.com/joacycode" target="_blank">github.com/joacycode</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/." rel="nofollow">SioCheung.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<h4 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h4><p><code>#</code> H1<br><code>##</code> H2<br><code>#####</code> H6<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/46199434/" class="article-date">
+	  <time datetime="2016-06-20T00:00:00.000Z" itemprop="datePublished">6月 20</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/tool/">tool</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/js/">js</a>, <a class="article-tag-link" href="/tags/markdown/">markdown</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/46199434/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 697(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2(分)</span>
+	
+
+  </p>
+</article>
+
+    
+  </div>
+
+  
+    
+    <nav class="bar bar-footer clearfix" data-stick-bottom>
+        <div class="bar-inner">
+        <ul class="pager pull-left">
+            
+            <li class="prev">
+                <a href="/page/3/">
+                    <i class="icon icon-angle-left"></i>
+                    上一页
+                </a>
+            </li>
+            
+            
+            <li class="next disabled">
+                <a href="javascript:;">
+                    下一页
+                    <i class="icon icon-angle-right"></i>                    
+                </a>
+            </li>
+            
+        </ul>
+            <div class="total-article bar-right">Page 4 of 4</div>
+        </div>
+    </nav>
+    
+ 
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xtheos" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+          Thanks for coming
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+</body>
+</html>

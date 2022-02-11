@@ -1,34 +1,902 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="打怪升级，游戏人生"><title>SioCheung | 君子求诸己</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = 'https://hm.baidu.com/hm.js?' + '05229ec683dcdbf3f2336800f1e4a337';
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-  })();
-  </script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">SioCheung</h1><a id="logo" href="/."><span class="defualt">Sio</span><span class="vi-color">Cheung</span></a><p class="description">君子求诸己</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/posts/e41d3209/">node笔记整理之HTTP模块</a></h1><div class="post-meta">2018-04-01</div><div class="post-content"><p>核心类<br><code>http.Server</code> 提供服务处理客户端的请求<br><code>http.ServerResponse</code> 服务端针对客户端的请求做出响应<br><code>http.IncomingMessage</code> 获取服务端/客户端返回的相关信息<br><code>http.ClientRequest</code> 客户端向服务端发起请求</p>
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>xtheos的网络日志</title>
+  <meta name="description" content="常抱有理想，常不抱有期望">
+<meta property="og:type" content="website">
+<meta property="og:title" content="xtheo">
+<meta property="og:url" content="https://xtheos.github.io/page/3/index.html">
+<meta property="og:site_name" content="xtheo">
+<meta property="og:description" content="常抱有理想，常不抱有期望">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xtheo">
+<meta name="twitter:description" content="常抱有理想，常不抱有期望">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://xtheos.github.io/page/3/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="xtheo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xtheos" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Xtheos</h2>
+        <h3 id="description" class="hidden-xs hidden-sm hidden-md">追求优秀，接受平凡</h3>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Thinker</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shanghai, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xtheos" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/categories/">categories</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotjs/">dotjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/h5/">h5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Canvas/">Canvas</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FileReader/">FileReader</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XMLHttpRequest/">XMLHttpRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XMLHttpRequest2/">XMLHttpRequest2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api/">api</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/charles/">charles</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chmod/">chmod</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/debounce/">debounce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dom/">dom</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dotjs/">dotjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/event/">event</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fs/">fs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/">h5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/history/">history</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-ClientRequest/">http.ClientRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-IncomingMessage/">http.IncomingMessage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-Server/">http.Server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http-ServerResponse/">http.ServerResponse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/path/">path</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/">shell</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime/">sublime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tag/">tag</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this/">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/throttle/">throttle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/video/">video</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-plugins/">vue-plugins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-rooter/">vue-rooter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex/">vuex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/全屏/">全屏</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步异步/">同步异步</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/定制化/">定制化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/柯里化/">柯里化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/规范/">规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阻塞非阻塞/">阻塞非阻塞</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Canvas/" style="font-size: 13px;">Canvas</a> <a href="/tags/FileReader/" style="font-size: 13px;">FileReader</a> <a href="/tags/XMLHttpRequest/" style="font-size: 13px;">XMLHttpRequest</a> <a href="/tags/XMLHttpRequest2/" style="font-size: 13px;">XMLHttpRequest2</a> <a href="/tags/api/" style="font-size: 13px;">api</a> <a href="/tags/charles/" style="font-size: 13px;">charles</a> <a href="/tags/chmod/" style="font-size: 13px;">chmod</a> <a href="/tags/css/" style="font-size: 13.33px;">css</a> <a href="/tags/debounce/" style="font-size: 13px;">debounce</a> <a href="/tags/dom/" style="font-size: 13px;">dom</a> <a href="/tags/dotjs/" style="font-size: 13px;">dotjs</a> <a href="/tags/event/" style="font-size: 13px;">event</a> <a href="/tags/fs/" style="font-size: 13px;">fs</a> <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/h5/" style="font-size: 13px;">h5</a> <a href="/tags/history/" style="font-size: 13px;">history</a> <a href="/tags/html/" style="font-size: 13px;">html</a> <a href="/tags/http-ClientRequest/" style="font-size: 13px;">http.ClientRequest</a> <a href="/tags/http-IncomingMessage/" style="font-size: 13px;">http.IncomingMessage</a> <a href="/tags/http-Server/" style="font-size: 13px;">http.Server</a> <a href="/tags/http-ServerResponse/" style="font-size: 13px;">http.ServerResponse</a> <a href="/tags/js/" style="font-size: 14px;">js</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/path/" style="font-size: 13px;">path</a> <a href="/tags/react/" style="font-size: 13px;">react</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a> <a href="/tags/sublime/" style="font-size: 13px;">sublime</a> <a href="/tags/tag/" style="font-size: 13.67px;">tag</a> <a href="/tags/this/" style="font-size: 13px;">this</a> <a href="/tags/throttle/" style="font-size: 13px;">throttle</a> <a href="/tags/typescript/" style="font-size: 13px;">typescript</a> <a href="/tags/video/" style="font-size: 13.33px;">video</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-plugins/" style="font-size: 13px;">vue-plugins</a> <a href="/tags/vue-rooter/" style="font-size: 13px;">vue-rooter</a> <a href="/tags/vuex/" style="font-size: 13px;">vuex</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/windows/" style="font-size: 13px;">windows</a> <a href="/tags/全屏/" style="font-size: 13.33px;">全屏</a> <a href="/tags/同步异步/" style="font-size: 13px;">同步异步</a> <a href="/tags/定制化/" style="font-size: 13px;">定制化</a> <a href="/tags/柯里化/" style="font-size: 13px;">柯里化</a> <a href="/tags/规范/" style="font-size: 13px;">规范</a> <a href="/tags/阻塞非阻塞/" style="font-size: 13px;">阻塞非阻塞</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/categories/">categories</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/a0e43f83/" class="title">DSL介绍和使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-18T15:37:16.000Z" itemprop="datePublished">2021-01-18</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/categories/">categories</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/15ddfa03/" class="title">你不知道的AST</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-02T20:30:01.000Z" itemprop="datePublished">2020-06-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/categories/">categories</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/97b701ae/" class="title">你不知道的babel</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-01-27T21:34:33.000Z" itemprop="datePublished">2020-01-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/e87e7952/" class="title">那一年前端招人的部分笔试题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-05T17:12:52.000Z" itemprop="datePublished">2019-11-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/shell/">shell</a>
+              </p>
+              <p class="item-title">
+                <a href="/posts/6b76c6f6/" class="title">shell编程来实现一些自动化-基础篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-10-05T17:46:55.000Z" itemprop="datePublished">2019-10-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  <main class="main" role="main">
+  
+  <div class="content article-list">
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/e41d3209/">node笔记整理之HTTP模块</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>核心类<br><code>http.Server</code> 提供服务处理客户端的请求<br><code>http.ServerResponse</code> 服务端针对客户端的请求做出响应<br><code>http.IncomingMessage</code> 获取服务端/客户端返回的相关信息<br><code>http.ClientRequest</code> 客户端向服务端发起请求</p>
 <h2 id="http-Server类"><a href="#http-Server类" class="headerlink" title="http.Server类"></a>http.Server类</h2><p><strong>提供服务，处理客户端的请求</strong></p>
 <p><code>createServer(requestListener)</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param requestListener(request,response) &lt;Function&gt;  当接收到客户端的请求时候进行的处理</span></span><br><span class="line"><span class="comment"> * * * * * @param request http.IncomingMessage对象 指客户端的请求</span></span><br><span class="line"><span class="comment"> * * * * * @param response http.serverResponse对象 指服务端的响应</span></span><br><span class="line"><span class="comment"> * @return HTTP Server类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 继承自 net.server 类且具有以下额外事件方法属性</span></span><br><span class="line"><span class="comment"> * @event clientError 客户端触发一个Error事件,该事件监听器负责销毁底层socket</span></span><br><span class="line"><span class="comment"> * * * *  callback(err,socket)</span></span><br><span class="line"><span class="comment"> * * * *  @param err 错误对象</span></span><br><span class="line"><span class="comment"> * * * *  @param socket net.socket对象 触发此事件将不会有(req,res),所以发送任何http响应,应写入socket对象</span></span><br><span class="line"><span class="comment"> * @event close 当http服务关闭触发</span></span><br><span class="line"><span class="comment"> * @event connect 当客户端发送HTPP CONNECT请求时候触发,HTTP method为connect,该事件未被监听则客户端会关闭连接</span></span><br><span class="line"><span class="comment"> * @event connection 客户端和服务端建立连接时触发 callabck(socket) </span></span><br><span class="line"><span class="comment"> * * * *  @param socket 服务端监听客户端的socket对象</span></span><br><span class="line"><span class="comment"> * @event request callback(req,res) 每接收到一个请求时触发，多个request可能对应的是一个 connection(keep-alive), 参数值同requestListener</span></span><br><span class="line"><span class="comment"> * @event upgrade callback(req,socket,head) 每当客户端发送http upgrade请求时触发，该事件未被监听则客户端会关闭连接</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @method close 停止服务端接收新的连接</span></span><br><span class="line"><span class="comment"> * @method listen([port],[hostname],[backlog],[callback])</span></span><br><span class="line"><span class="comment"> * * * * * @param port &lt;number&gt; 端口 默认随机分配</span></span><br><span class="line"><span class="comment"> * * * * * @param hostname &lt;string&gt; 主机名域名</span></span><br><span class="line"><span class="comment"> * * * * * @param backlog &lt;number&gt; 等待连接的队列最大长度 默认511</span></span><br><span class="line"><span class="comment"> * * * * * @param callback &lt;function&gt; 回调</span></span><br><span class="line"><span class="comment"> * @method listen(path,[callback]) 启动一个unix socket服务</span></span><br><span class="line"><span class="comment"> * @method listen(handle,[callback]) </span></span><br><span class="line"><span class="comment"> * @method setTimeout([msecs=120000],[callback]) 设置socket超时时间,发生超时触发服务器对象的 'timeout' 事件,并传入 socket 作为一个参数</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @property listening [boolean] 服务是否在监听连接</span></span><br><span class="line"><span class="comment"> * @property maxHeaderCount 限制请求头的最大数量 默认2000 0表示无限制</span></span><br><span class="line"><span class="comment"> * @property timeout 设置获取连接超时时间</span></span><br><span class="line"><span class="comment"> * @property keepAliveTimeout 服务器完成最后的响应需要等待额外数据的时间,保持活跃的毫秒数,之后才销毁socket</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/posts/e41d3209/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/7b756efa/">node笔记整理之fs和path</a></h1><div class="post-meta">2018-03-06</div><div class="post-content"><h2 id="FS模块"><a href="#FS模块" class="headerlink" title="FS模块"></a>FS模块</h2><h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><p><code>fs.open(path, flags[, mode], callback)</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// flags: 文件打开模式，读取为'r'，写入为'w'，追加为'a'</span></span><br><span class="line"><span class="comment">// 读取</span></span><br><span class="line">fs.open(<span class="string">'./readfile.txt'</span>, <span class="string">'r'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'发生错误: '</span> + err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> buff = Buffer.allocUnsafe(<span class="number">255</span>);</span><br><span class="line">        <span class="comment">// fs.read() @params(文件描述，指定读入的缓存，写入缓存开始位置，写入长度，读取文件开始位置,callback)</span></span><br><span class="line">        <span class="comment">// callback() @params(错误对象，实际长度，被读取缓存的对象)</span></span><br><span class="line">        fs.read(fd, buff, <span class="number">0</span>, <span class="number">28</span>, <span class="number">0</span>, (err, bytesRead, buffer) =&gt; &#123;</span><br><span class="line">            <span class="keyword">let</span> newBuff = buffer.slice(<span class="number">0</span>, bytesRead).toString();</span><br><span class="line">            <span class="built_in">console</span>.log(bytesRead, newBuff);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 写入</span></span><br><span class="line">fs.open(<span class="string">'./writefile.txt'</span>, <span class="string">'a'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'发生错误: '</span> + err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> buff = Buffer.from(<span class="string">'打开后写入：nodeJs博大精深~\r\n'</span>);</span><br><span class="line">        <span class="comment">// fs.write() @params(文件描述，指定读出的缓存，读取缓存开始位置，读取长度|null默认长度，写入文件开始位置|null上次位置,callback)</span></span><br><span class="line">        <span class="comment">// callback() @params(错误对象，实际长度，被读取缓存的对象)</span></span><br><span class="line">        fs.write(fd, buff, <span class="number">0</span>, <span class="literal">null</span>, <span class="literal">null</span>, (err, written, buffer) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(<span class="string">'写文件失败'</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'写文件成功'</span>, written, buffer);</span><br><span class="line">            fs.fsync(fd, err =&gt; &#123; <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(<span class="string">'fsync错误：'</span> + err) &#125;);</span><br><span class="line">            fs.close(fd, err =&gt; &#123; <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(<span class="string">'close错误：'</span> + err) &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/posts/7b756efa/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/64d676f8/">js的this指向实践问题记录</a></h1><div class="post-meta">2018-02-07</div><div class="post-content"><h4 id="遇到的this问题的翻车事故"><a href="#遇到的this问题的翻车事故" class="headerlink" title="遇到的this问题的翻车事故"></a>遇到的this问题的翻车事故</h4><p><code>this</code>对于当时刚接触js的人来说幽灵一般的存在，就是老司机也不免有大意翻车的时候，印象中很多前端面试的基础部分考察<code>prototype</code>和<code>this</code>是必不可少的。<br>前几天改一个bug改出<code>this</code>的问题，大意翻车，虽然很快就解决了，但还是警醒下自己，温习梳理以免再出错。<br>问题类似下面的代码块，对象外提取公共模块导入，对象内部方法和属性通过对象传参<code>params</code>的方式进入<code>setTime</code>方法执行业务逻辑。<br></p></div><p class="readmore"><a href="/posts/64d676f8/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/a055a843/">mac转windows入职舒适体验手册</a></h1><div class="post-meta">2018-01-26</div><div class="post-content"><p>“这辈子不可能windows的，不可能用windows的，体验太差了”，这是我用三年的mac之后感受到的，appple对于软硬件结合使用的用户体验真的是做到了极致，几近完美的retina和字体体验，三年几乎没有关过机的情况下没有任何卡顿。我从A出来之后到了J，这边强制性的配置了台式机windows7系统，当时我是拒绝的，个人电脑也没有很好的办法加到公司的网络，当时真的是硬着头皮从mac转windows的，果然一开机，这个开机速度，渣渣的屏幕和windows的默认字体，没有了习惯的Spotlight，加上J公司相对较差较慢的网络环境，强大到github,各种云，各种音乐视频网站都上不去的网络限制，真是感觉自己会因为一台设备和开发环境离职的感觉。但是，我要说但是，自己不可能这么幼稚的，一个人强大的表现是跳出自己舒适圈，去适应和挑战一些东西。随手查了资料，发现自己可以打造一个相对于舒适的设备环境体验,不用mac又如何？<br>so…<br></p></div><p class="readmore"><a href="/posts/a055a843/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/4d3fd604/">根据唯一标识进行UI定制化</a></h1><div class="post-meta">2017-12-19</div><div class="post-content"><h4 id="UI可定制的地方："><a href="#UI可定制的地方：" class="headerlink" title="UI可定制的地方："></a>UI可定制的地方：</h4><ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param requestListener(request,response) &lt;Function&gt;  当接收到客户端的请求时候进行的处理</span></span><br><span class="line"><span class="comment"> * * * * * @param request http.IncomingMessage对象 指客户端的请求</span></span><br><span class="line"><span class="comment"> * * * * * @param response http.serverResponse对象 指服务端的响应</span></span><br><span class="line"><span class="comment"> * @return HTTP Server类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 继承自 net.server 类且具有以下额外事件方法属性</span></span><br><span class="line"><span class="comment"> * @event clientError 客户端触发一个Error事件,该事件监听器负责销毁底层socket</span></span><br><span class="line"><span class="comment"> * * * *  callback(err,socket)</span></span><br><span class="line"><span class="comment"> * * * *  @param err 错误对象</span></span><br><span class="line"><span class="comment"> * * * *  @param socket net.socket对象 触发此事件将不会有(req,res),所以发送任何http响应,应写入socket对象</span></span><br><span class="line"><span class="comment"> * @event close 当http服务关闭触发</span></span><br><span class="line"><span class="comment"> * @event connect 当客户端发送HTPP CONNECT请求时候触发,HTTP method为connect,该事件未被监听则客户端会关闭连接</span></span><br><span class="line"><span class="comment"> * @event connection 客户端和服务端建立连接时触发 callabck(socket) </span></span><br><span class="line"><span class="comment"> * * * *  @param socket 服务端监听客户端的socket对象</span></span><br><span class="line"><span class="comment"> * @event request callback(req,res) 每接收到一个请求时触发，多个request可能对应的是一个 connection(keep-alive), 参数值同requestListener</span></span><br><span class="line"><span class="comment"> * @event upgrade callback(req,socket,head) 每当客户端发送http upgrade请求时触发，该事件未被监听则客户端会关闭连接</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @method close 停止服务端接收新的连接</span></span><br><span class="line"><span class="comment"> * @method listen([port],[hostname],[backlog],[callback])</span></span><br><span class="line"><span class="comment"> * * * * * @param port &lt;number&gt; 端口 默认随机分配</span></span><br><span class="line"><span class="comment"> * * * * * @param hostname &lt;string&gt; 主机名域名</span></span><br><span class="line"><span class="comment"> * * * * * @param backlog &lt;number&gt; 等待连接的队列最大长度 默认511</span></span><br><span class="line"><span class="comment"> * * * * * @param callback &lt;function&gt; 回调</span></span><br><span class="line"><span class="comment"> * @method listen(path,[callback]) 启动一个unix socket服务</span></span><br><span class="line"><span class="comment"> * @method listen(handle,[callback]) </span></span><br><span class="line"><span class="comment"> * @method setTimeout([msecs=120000],[callback]) 设置socket超时时间,发生超时触发服务器对象的 'timeout' 事件,并传入 socket 作为一个参数</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @property listening [boolean] 服务是否在监听连接</span></span><br><span class="line"><span class="comment"> * @property maxHeaderCount 限制请求头的最大数量 默认2000 0表示无限制</span></span><br><span class="line"><span class="comment"> * @property timeout 设置获取连接超时时间</span></span><br><span class="line"><span class="comment"> * @property keepAliveTimeout 服务器完成最后的响应需要等待额外数据的时间,保持活跃的毫秒数,之后才销毁socket</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/e41d3209/" class="article-date">
+	  <time datetime="2018-04-01T11:49:47.000Z" itemprop="datePublished">4月 1</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/node/">node</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/http-ClientRequest/">http.ClientRequest</a>, <a class="article-tag-link" href="/tags/http-IncomingMessage/">http.IncomingMessage</a>, <a class="article-tag-link" href="/tags/http-Server/">http.Server</a>, <a class="article-tag-link" href="/tags/http-ServerResponse/">http.ServerResponse</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/e41d3209/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.8k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 11(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/7b756efa/">node笔记整理之fs和path</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <h2 id="FS模块"><a href="#FS模块" class="headerlink" title="FS模块"></a>FS模块</h2><h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><p><code>fs.open(path, flags[, mode], callback)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// flags: 文件打开模式，读取为'r'，写入为'w'，追加为'a'</span></span><br><span class="line"><span class="comment">// 读取</span></span><br><span class="line">fs.open(<span class="string">'./readfile.txt'</span>, <span class="string">'r'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'发生错误: '</span> + err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> buff = Buffer.allocUnsafe(<span class="number">255</span>);</span><br><span class="line">        <span class="comment">// fs.read() @params(文件描述，指定读入的缓存，写入缓存开始位置，写入长度，读取文件开始位置,callback)</span></span><br><span class="line">        <span class="comment">// callback() @params(错误对象，实际长度，被读取缓存的对象)</span></span><br><span class="line">        fs.read(fd, buff, <span class="number">0</span>, <span class="number">28</span>, <span class="number">0</span>, (err, bytesRead, buffer) =&gt; &#123;</span><br><span class="line">            <span class="keyword">let</span> newBuff = buffer.slice(<span class="number">0</span>, bytesRead).toString();</span><br><span class="line">            <span class="built_in">console</span>.log(bytesRead, newBuff);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 写入</span></span><br><span class="line">fs.open(<span class="string">'./writefile.txt'</span>, <span class="string">'a'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'发生错误: '</span> + err);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> buff = Buffer.from(<span class="string">'打开后写入：nodeJs博大精深~\r\n'</span>);</span><br><span class="line">        <span class="comment">// fs.write() @params(文件描述，指定读出的缓存，读取缓存开始位置，读取长度|null默认长度，写入文件开始位置|null上次位置,callback)</span></span><br><span class="line">        <span class="comment">// callback() @params(错误对象，实际长度，被读取缓存的对象)</span></span><br><span class="line">        fs.write(fd, buff, <span class="number">0</span>, <span class="literal">null</span>, <span class="literal">null</span>, (err, written, buffer) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(<span class="string">'写文件失败'</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'写文件成功'</span>, written, buffer);</span><br><span class="line">            fs.fsync(fd, err =&gt; &#123; <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(<span class="string">'fsync错误：'</span> + err) &#125;);</span><br><span class="line">            fs.close(fd, err =&gt; &#123; <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(<span class="string">'close错误：'</span> + err) &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/7b756efa/" class="article-date">
+	  <time datetime="2018-03-06T14:27:20.000Z" itemprop="datePublished">3月 6</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/node/">node</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/fs/">fs</a>, <a class="article-tag-link" href="/tags/path/">path</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/7b756efa/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.7k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 12(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/64d676f8/">js的this指向实践问题记录</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <h4 id="遇到的this问题的翻车事故"><a href="#遇到的this问题的翻车事故" class="headerlink" title="遇到的this问题的翻车事故"></a>遇到的this问题的翻车事故</h4><p><code>this</code>对于当时刚接触js的人来说幽灵一般的存在，就是老司机也不免有大意翻车的时候，印象中很多前端面试的基础部分考察<code>prototype</code>和<code>this</code>是必不可少的。<br>前几天改一个bug改出<code>this</code>的问题，大意翻车，虽然很快就解决了，但还是警醒下自己，温习梳理以免再出错。<br>问题类似下面的代码块，对象外提取公共模块导入，对象内部方法和属性通过对象传参<code>params</code>的方式进入<code>setTime</code>方法执行业务逻辑。<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/64d676f8/" class="article-date">
+	  <time datetime="2018-02-06T17:00:54.000Z" itemprop="datePublished">2月 6</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/this/">this</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/64d676f8/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.9k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/a055a843/">mac转windows入职舒适体验手册</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>“这辈子不可能windows的，不可能用windows的，体验太差了”，这是我用三年的mac之后感受到的，appple对于软硬件结合使用的用户体验真的是做到了极致，几近完美的retina和字体体验，三年几乎没有关过机的情况下没有任何卡顿。我从A出来之后到了J，这边强制性的配置了台式机windows7系统，当时我是拒绝的，个人电脑也没有很好的办法加到公司的网络，当时真的是硬着头皮从mac转windows的，果然一开机，这个开机速度，渣渣的屏幕和windows的默认字体，没有了习惯的Spotlight，加上J公司相对较差较慢的网络环境，强大到github,各种云，各种音乐视频网站都上不去的网络限制，真是感觉自己会因为一台设备和开发环境离职的感觉。但是，我要说但是，自己不可能这么幼稚的，一个人强大的表现是跳出自己舒适圈，去适应和挑战一些东西。随手查了资料，发现自己可以打造一个相对于舒适的设备环境体验,不用mac又如何？<br>so…<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/a055a843/" class="article-date">
+	  <time datetime="2018-01-25T19:59:50.000Z" itemprop="datePublished">1月 25</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/windows/">windows</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/windows/">windows</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/a055a843/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.1k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/4d3fd604/">根据唯一标识进行UI定制化</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <h4 id="UI可定制的地方："><a href="#UI可定制的地方：" class="headerlink" title="UI可定制的地方："></a>UI可定制的地方：</h4><ul>
 <li>字体</li>
 <li>图片图标背景</li>
 <li>文案</li>
 <li>位置</li>
 <li>数量</li>
 <li>外观（形状背景）</li>
-<li>请求地址（通过标识的更改）</li></ul></div><p class="readmore"><a href="/posts/4d3fd604/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/37a4883/">各种浏览器咋实现元素的全屏模式</a></h1><div class="post-meta">2017-09-14</div><div class="post-content"><p>最近自己做H5的播放器，里面的各种按钮都要悉数去做，去调整样式，详细的属性方法事件在我另一篇‘js基础核心梳理之Video’里有堆，可以去全面的做个概览。却没有发现有全屏播放这个方法或者属性，不知道未来会不会封装这个方法进去。比如有个属性叫fullScreen设置为true就可以全屏显示。既然没有那就查查资料自己封装一个全屏方法，原则上市场上存在的产品现象背后都有可实现的方法，你就可以去做。</p>
-<p>以下是实现全屏和退出全屏的各种浏览器兼容方法，也可以利用 <code>fullScreenElement</code> 和 <code>fullScreenEnabled</code>去检测某个全屏的元素和全屏状态。<br></p></div><p class="readmore"><a href="/posts/37a4883/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/d4c5a626/">柯里化函数是个什么</a></h1><div class="post-meta">2017-08-20</div><div class="post-content"><p>最近碰到这个概念，就来做个笔记，啥都不说了上定义。</p>
+<li>请求地址（通过标识的更改）
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/4d3fd604/" class="article-date">
+	  <time datetime="2017-12-19T10:15:43.000Z" itemprop="datePublished">12月 19</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/css/">css</a>, <a class="article-tag-link" href="/tags/js/">js</a>, <a class="article-tag-link" href="/tags/定制化/">定制化</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/4d3fd604/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/37a4883/">各种浏览器咋实现元素的全屏模式</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>最近自己做H5的播放器，里面的各种按钮都要悉数去做，去调整样式，详细的属性方法事件在我另一篇‘js基础核心梳理之Video’里有堆，可以去全面的做个概览。却没有发现有全屏播放这个方法或者属性，不知道未来会不会封装这个方法进去。比如有个属性叫fullScreen设置为true就可以全屏显示。既然没有那就查查资料自己封装一个全屏方法，原则上市场上存在的产品现象背后都有可实现的方法，你就可以去做。</p>
+<p>以下是实现全屏和退出全屏的各种浏览器兼容方法，也可以利用 <code>fullScreenElement</code> 和 <code>fullScreenEnabled</code>去检测某个全屏的元素和全屏状态。<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/37a4883/" class="article-date">
+	  <time datetime="2017-09-14T00:00:00.000Z" itemprop="datePublished">9月 14</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/js/">js</a>, <a class="article-tag-link" href="/tags/video/">video</a>, <a class="article-tag-link" href="/tags/全屏/">全屏</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/37a4883/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 470(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/d4c5a626/">柯里化函数是个什么</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>最近碰到这个概念，就来做个笔记，啥都不说了上定义。</p>
 <blockquote>
 <p>柯里化通常也称部分求值，其含义是给函数分步传递参数，每次传递参数后部分应用参数，并返回一个更具体的函数接受剩下的参数，这中间可嵌套多层这样的接受部分参数函数，直至返回最后结果。</p>
 </blockquote>
-<p><mark>talk is cheap,show me the code</mark><br>如果你有js基础，看看下面的代码就知道柯里化是咋回事了。</p></div><p class="readmore"><a href="/posts/d4c5a626/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/df4bb76e/">来，认识下XMLHttpRequest2</a></h1><div class="post-meta">2017-07-13</div><div class="post-content"><h4 id="XMLHttpRequest综述"><a href="#XMLHttpRequest综述" class="headerlink" title="XMLHttpRequest综述"></a>XMLHttpRequest综述</h4><p><a href="https://en.wikipedia.org/wiki/XMLHttpRequest" target="_blank" rel="noopener">XMLHttpRequest</a>在维基百科的定义”XMLHttpRequest (XHR) is an API in the form of an object whose methods transfer data between a web browser and a web server.” 它是一个在服务端和客户端之间进行传输数据的浏览器接口，说白了就是HTTP(S)的通信，依赖于浏览器的javascript环境。通信的数据格式限于XML,JSON,HTML,plain text。<br>但是这个接口的最初版本，各个浏览器厂家的实现也不尽相同，没有被标准化。这么下去也不是个事儿，技术总得进步，接口总得统一，不然不仅开发者闹情绪，用户都快不满足了，后来html5出现以后，这个标准化的工作就提上了日程，谁去做？当然W3C那帮老大哥啊，凡是和www有关的草案，正式标准都是得那发话。<br>所以众望所归，这个XMLHttpRequest的标准草案在2008年落成，因为增加了许多新的技能，所以叫XMLHttpRequest有点赶不上时代潮流了，叫XMLHttpRequest plus？这个名字有点apple，还是叫<code>XMLHttpRequest level2</code>吧。<br>到底增加了哪些功能了呢？那先研究下XMLHttpRequest level1基础？那还废什么话直接捋袖子干~<br>在控制台吧XMLHttpRequest打出来会发现他是一个构造函数，是一个可以继承的类，要使用其上的接口方法属性需要实例化这个方法。<br>新建一个XMLHttpRequest的实例<br></p></div><p class="readmore"><a href="/posts/df4bb76e/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/ab959e28/">重新认知下History这家伙</a></h1><div class="post-meta">2017-06-13</div><div class="post-content"><p>DOM中的window对象通过window.history方法提供了对浏览器历史记录的读取，让你可以在用户的访问记录中前进和后退。从HTML5开始，我们可以开始操作这个历史记录堆栈。</p>
+<p><mark>talk is cheap,show me the code</mark><br>如果你有js基础，看看下面的代码就知道柯里化是咋回事了。</p>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/d4c5a626/" class="article-date">
+	  <time datetime="2017-08-20T00:00:00.000Z" itemprop="datePublished">8月 20</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/js/">js</a>, <a class="article-tag-link" href="/tags/柯里化/">柯里化</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/d4c5a626/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 492(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/df4bb76e/">来，认识下XMLHttpRequest2</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <h4 id="XMLHttpRequest综述"><a href="#XMLHttpRequest综述" class="headerlink" title="XMLHttpRequest综述"></a>XMLHttpRequest综述</h4><p><a href="https://en.wikipedia.org/wiki/XMLHttpRequest" target="_blank" rel="noopener">XMLHttpRequest</a>在维基百科的定义”XMLHttpRequest (XHR) is an API in the form of an object whose methods transfer data between a web browser and a web server.” 它是一个在服务端和客户端之间进行传输数据的浏览器接口，说白了就是HTTP(S)的通信，依赖于浏览器的javascript环境。通信的数据格式限于XML,JSON,HTML,plain text。<br>但是这个接口的最初版本，各个浏览器厂家的实现也不尽相同，没有被标准化。这么下去也不是个事儿，技术总得进步，接口总得统一，不然不仅开发者闹情绪，用户都快不满足了，后来html5出现以后，这个标准化的工作就提上了日程，谁去做？当然W3C那帮老大哥啊，凡是和www有关的草案，正式标准都是得那发话。<br>所以众望所归，这个XMLHttpRequest的标准草案在2008年落成，因为增加了许多新的技能，所以叫XMLHttpRequest有点赶不上时代潮流了，叫XMLHttpRequest plus？这个名字有点apple，还是叫<code>XMLHttpRequest level2</code>吧。<br>到底增加了哪些功能了呢？那先研究下XMLHttpRequest level1基础？那还废什么话直接捋袖子干~<br>在控制台吧XMLHttpRequest打出来会发现他是一个构造函数，是一个可以继承的类，要使用其上的接口方法属性需要实例化这个方法。<br>新建一个XMLHttpRequest的实例<br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/df4bb76e/" class="article-date">
+	  <time datetime="2017-07-13T00:00:00.000Z" itemprop="datePublished">7月 13</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/XMLHttpRequest/">XMLHttpRequest</a>, <a class="article-tag-link" href="/tags/XMLHttpRequest2/">XMLHttpRequest2</a>, <a class="article-tag-link" href="/tags/js/">js</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/df4bb76e/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.6k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/ab959e28/">重新认知下History这家伙</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>DOM中的window对象通过window.history方法提供了对浏览器历史记录的读取，让你可以在用户的访问记录中前进和后退。从HTML5开始，我们可以开始操作这个历史记录堆栈。</p>
 <h4 id="1-window属性history的方法"><a href="#1-window属性history的方法" class="headerlink" title="1.window属性history的方法"></a>1.window属性history的方法</h4><p>使用<code>back()</code>,<code>forward()</code>,和<code>go()</code>方法可以在用户的历史记录中前进和后退</p>
-<p>用户后退行为,这个方法会像用户点击了浏览器工具栏上的返回键一样。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.history.back();</span><br></pre></td></tr></table></figure><br></p></div><p class="readmore"><a href="/posts/ab959e28/">阅读全文</a></p></div><div class="post"><h1 class="post-title"><a href="/posts/f370b2d3/">git命令实战记录</a></h1><div class="post-meta">2017-04-28</div><div class="post-content"><p>这里为了方便查字典，整理了常用的git操作，正常开发工作情况下应该很全了，如果随后遇到新的奇淫操作会不断更新的~</p>
+<p>用户后退行为,这个方法会像用户点击了浏览器工具栏上的返回键一样。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.history.back();</span><br></pre></td></tr></table></figure><br>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/ab959e28/" class="article-date">
+	  <time datetime="2017-06-13T00:00:00.000Z" itemprop="datePublished">6月 13</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/history/">history</a>, <a class="article-tag-link" href="/tags/js/">js</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/ab959e28/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.4k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+  </p>
+</article>
+
+    
+      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/f370b2d3/">git命令实战记录</a>
+    </h1>
+  
+
+  </div>
+  
+  <div class="article-entry text-muted" itemprop="description">
+    <p>这里为了方便查字典，整理了常用的git操作，正常开发工作情况下应该很全了，如果随后遇到新的奇淫操作会不断更新的~</p>
 <h4 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh key"></a>生成ssh key</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"your_email@example.com"</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"joacycode@163.com</span></span><br></pre></td></tr></table></figure>
-<h4 id="用户名、邮箱配置"><a href="#用户名、邮箱配置" class="headerlink" title="用户名、邮箱配置"></a>用户名、邮箱配置</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name yourname --<span class="built_in">local</span></span><br><span class="line">git config user.email yourname@emmail.com --<span class="built_in">local</span></span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/posts/f370b2d3/">阅读全文</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget widget-info"><div class="widget-info"><a style="text-align:center"><img class="widget-info-photo" src="https://aszero.oss-cn-shanghai.aliyuncs.com/imgs/fangao_495x606.jpg" style="width:80px;height:80px;border-radius: 100%;"></a><p class="myname">SioCheung</p><p class="slogan">Zero to Hero</p></div></div><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/posts/a0e43f83/">DSL介绍和使用</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/15ddfa03/">你不知道的AST</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/97b701ae/">你不知道的babel</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/e87e7952/">那一年前端招人的部分笔试题</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/6b76c6f6/">shell编程来实现一些自动化-基础篇</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/e7485c24/">常见模块化规范研究记录</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/7b16fe01/">你不知道的rollup</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/ad3abf2b/">浏览器标签之间的通信</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/30ba4d06/">你不知道的yarn</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/5ece973c/">我对于同步异步和阻塞非阻塞理解</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/categories/">categories</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotjs/">dotjs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/h5/">h5</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell/">shell</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ts/">ts</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows/">windows</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/joacycode" title="github.com/joacycode" target="_blank">github.com/joacycode</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/." rel="nofollow">SioCheung.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<h4 id="用户名、邮箱配置"><a href="#用户名、邮箱配置" class="headerlink" title="用户名、邮箱配置"></a>用户名、邮箱配置</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name yourname --<span class="built_in">local</span></span><br><span class="line">git config user.email yourname@emmail.com --<span class="built_in">local</span></span><br></pre></td></tr></table></figure>
+  </div>
+  
+  <p class="article-meta">
+    <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/f370b2d3/" class="article-date">
+	  <time datetime="2017-04-28T00:00:00.000Z" itemprop="datePublished">4月 28</time>
+	</a>
+</span>
+    
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/git/">git</a>
+  </span>
+
+    
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/git/">git</a>, <a class="article-tag-link" href="/tags/linux/">linux</a>, <a class="article-tag-link" href="/tags/shell/">shell</a>
+  </span>
+
+
+    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/f370b2d3/#comments" class="article-comment-link">评论</a></span>
+    
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.3k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+  </p>
+</article>
+
+    
+  </div>
+
+  
+    
+    <nav class="bar bar-footer clearfix" data-stick-bottom>
+        <div class="bar-inner">
+        <ul class="pager pull-left">
+            
+            <li class="prev">
+                <a href="/page/2/">
+                    <i class="icon icon-angle-left"></i>
+                    上一页
+                </a>
+            </li>
+            
+            
+            <li class="next">
+                <a href="/page/4/">
+                    下一页
+                    <i class="icon icon-angle-right"></i>
+                </a>
+            </li>
+            
+        </ul>
+            <div class="total-article bar-right">Page 3 of 4</div>
+        </div>
+    </nav>
+    
+ 
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xtheos" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+          Thanks for coming
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+</body>
+</html>
